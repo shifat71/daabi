@@ -22,6 +22,7 @@ The platform has the following features:
 - Students can create demands or requests for the authorities.  
 - Top demands are sorted by agreement, popularity, and category (department, club, hall, environment).  
 - Users can vote in agreement or disagreement to the demand.
+- User can create various events (like in Facebook) under a demand to raise support for it.
 
 ### 4. 🔧 **Issues**
 - Students can create issues they are facing.  
