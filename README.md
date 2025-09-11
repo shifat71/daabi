@@ -35,7 +35,14 @@ The platform has the following features:
 6. **Shorts**:  
    - Campus moments as short videos (like reels).  
    - Trending/latest feed with video playback.  
-   - Mobile app handles video compression and playback.   
+   - Mobile app handles video compression and playback. 
+   
+### 7. Democracy Practice
+- Management of the platform for a campus will be done by **elected bodies**.
+- Platform decisions or changes can also be decided **via voting directly on the platform**.
+- Includes roles, permissions, and voting mechanisms for campus governance.
+
+  
 
 ---
 
