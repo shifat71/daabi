@@ -61,7 +61,7 @@ The platform has the following features:
 - Buyers can browse, comment, and contact sellers.  
 - Items can be categorized for easier browsing (electronics, books, clothes, etc.).
 
-9. **Crowdfunding**  
+### 9. 💝 **Crowdfunding/Donation** 
 - Any student organization, club, or authorized student body can create a crowdfunding event.  
 - Each event gets a **shareable link** and is showcased in the crowdfunding section.  
 - Other students or alumni of the university can **donate instantly** using online payment gateways like **bKash**.  
