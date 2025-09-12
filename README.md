@@ -22,34 +22,53 @@ The platform has the following features:
 - Students can create demands or requests for the authorities.  
 - Top demands are sorted by agreement, popularity, and category (department, club, hall, environment).  
 - Users can vote in agreement or disagreement to the demand.
+- Users can discuss about the demand in multi-thread comment sections like Reddit.
 - User can create various events (like in Facebook) under a demand to raise support for it.
+- If a demand from authorized body is created, they can raise funds for it using crowdfunding section.
 
-### 4. 🔧 **Issues**
-- Students can create issues they are facing.  
-- Each issue has a **dynamic progress tracker** showing the status of resolution.  
-- A log-based system records updates, actions taken, and comments.  
-- Students can view progress and logs in real-time.
+### 4. 🔧 **Issues**  
+- Students can raise any campus-related issue (e.g., WiFi outage in a hall, broken facilities, or administrative delays).  
+- Once submitted, the issue is forwarded to the **responsible student body or authority** for review and action.  
+- Each issue has a **dynamic progress tracker** showing stages:  
+  - *Reported → Assigned → Discussed → Action Taken → Resolved*  
+- A **real-time log system** records:  
+  - Updates, actions, and comments  
+  - **Who the issue is assigned to**  
+  - Whether the **student body discussed it with authorities**  
+  - If it’s **under discussion** or if the **authority has acted**  
+- **Student contributions:**  
+  - Any student can contribute (e.g., talking with a teacher, gathering support, or taking steps).  
+  - Every contribution is **logged and visible**, showing collective effort.  
 
 ### 5. 🔐 **Auth**
 - All users must be verified via their student email or ID card.  
 - Harassment for opinions on the platform is strictly prohibited, and legal action can be taken against offenders.  
 - Session management for both web and mobile.
 
-### 6. 🎬 **Shorts**
-- Campus moments as short videos (like reels).  
+### 6. 🎬 **Campus Highlights**
+- Campus highlighted moments as short videos.  
 - Trending/latest feed with video playback.  
 - Mobile app handles video compression and playback.
 
 ### 7. 🗳️ **Democracy Practice**
-- Management of the platform for a campus will be done by **elected bodies**.  
+- Management of the platform for a campus will be done by the developer team and **elected bodies**.  
 - Platform decisions or changes can also be decided **via voting directly on the platform**.  
-- Includes roles, permissions, and voting mechanisms for campus governance.
+- Includes roles, permissions, and voting mechanisms for campus governance. Like, a club or organization has permissions to create a crowdfunding/donation event. Elected body will have permission to moderate the contents in the platform. 
 
 ### 8. 🛒 **Kroy-Bikroy (Buy-Sell)**
 - A campus marketplace where students can post items for sale.  
 - Users can upload **single or multiple items** with pictures and videos.  
 - Buyers can browse, comment, and contact sellers.  
 - Items can be categorized for easier browsing (electronics, books, clothes, etc.).
+
+9. **Crowdfunding**  
+- Any student organization, club, or authorized student body can create a crowdfunding event.  
+- Each event gets a **shareable link** and is showcased in the crowdfunding section.  
+- Other students or alumni of the university can **donate instantly** using online payment gateways like **bKash**.  
+- Events display fundraising goals, progress tracking, updates, and transparent usage of funds.
+
+
+
 
 ---
 
