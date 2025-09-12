@@ -26,19 +26,25 @@ The platform has the following features:
 - User can create various events (like in Facebook) under a demand to raise support for it.
 - If a demand from authorized body is created, they can raise funds for it using crowdfunding section.
 
-### 4. 🔧 **Issues**  
-- Students can raise any campus-related issue (e.g., WiFi outage in a hall, broken facilities, or administrative delays).  
-- Once submitted, the issue is forwarded to the **responsible student body or authority** for review and action.  
-- Each issue has a **dynamic progress tracker** showing stages:  
-  - *Reported → Assigned → Discussed → Action Taken → Resolved*  
-- A **real-time log system** records:  
-  - Updates, actions, and comments  
-  - **Who the issue is assigned to**  
-  - Whether the **student body discussed it with authorities**  
-  - If it’s **under discussion** or if the **authority has acted**  
-- **Student contributions:**  
-  - Any student can contribute (e.g., talking with a teacher, gathering support, or taking steps).  
-  - Every contribution is **logged and visible**, showing collective effort.  
+## 🔧 Issues
+
+### 1. Creating an Issue
+Students can report campus-related problems, creating an **issue thread**.  
+*Example:* A student notices the WiFi in Hall A is down and creates an issue thread.
+
+### 2. Adding Contributions & Activities
+- Anyone can add a **contribution**—an **event** or **message** (text, image, video).  
+- Under a contribution, students can **tag responsible persons** from student bodies or authorities.  
+- Contributions can be **upvoted/downvoted** or **replied to**, forming **multi-threaded discussions**.  
+- All **activities** are tracked; more activity **increases the chance of the issue being highlighted**.  
+*Example:* Another student replies, “I spoke to the IT office—they are fixing it today,” tagging the IT head. Others upvote this contribution.
+
+### 3. Tracking Progress
+- Each issue has a **progress tracker**:  
+  `Reported → Assigned → Discussed → Action Taken → Resolved`  
+- A **real-time log** combines **all contributions by students**, showing updates, actions, and collective effort.  
+*Example:* The log shows the WiFi issue was reported, IT assigned, discussed with residents, action taken, and resolved.
+ 
 
 ### 5. 🔐 **Auth**
 - All users must be verified via their student email or ID card.  
