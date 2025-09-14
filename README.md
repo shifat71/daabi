@@ -18,24 +18,29 @@ The platform has the following features:
 - Top discussions are sorted by upvotes/downvotes, popularity, and engagement.  
 - Users can create new discussions, comment, and interact.
 
-### 3. 📋 **Demands**
-- Students can create demands or requests for the authorities.  
+### 3. 📋 **Demands Tab**
+- Demands are a bigger problem, consisting of multiple issues.
+- Students can create demands or requests for the authorities.
+- Demand page will showcase these demands, sorting the top demands based on contributions and interactions in that particular demand.
 - Top demands are sorted by agreement, popularity, and category (department, club, hall, environment).  
-- Users can vote in agreement or disagreement to the demand.
-- Users can discuss about the demand in multi-thread comment sections like Reddit.
-- User can create various events (like in Facebook) under a demand to raise support for it.
-- If a demand from authorized body is created, they can raise funds for it using crowdfunding section.
+- Users can vote in agreement or disagreement with the demand.
+- Users can discuss the demand in multi-thread comment sections like Reddit.
+- The user can create various events (like in Facebook) under a demand to raise support for it.
+- If a demand from an authorized body is created, they can raise funds for it using the crowdfunding section.
 
-## 🔧 Issues
+## 🔧 4. **Issues Tab**
+- Issues tab shows a list of issues sorted by contributions and activities under an issue.
 
 ### 1. Creating an Issue
+- "Issue" is a small problem.
+- *Example:* A student notices the WiFi in Hall A is down and creates an issue thread.
 Students can report campus-related problems, creating an **issue thread**.  
-*Example:* A student notices the WiFi in Hall A is down and creates an issue thread.
 
 ### 2. Adding Contributions & Activities
 - Anyone can add a **contribution**—an **event** or **message** (text, image, video).  
 - Under a contribution, students can **tag responsible persons** from student bodies or authorities.  
-- Contributions can be **upvoted/downvoted** or **replied to**, forming **multi-threaded discussions**.  
+- Contributions can be **upvoted/downvoted** or **replied to**, forming **multi-threaded discussions**.
+- Each issue shows a log of contributions to the issue by others, these contributions are used to sort the top issues in the issues tab.
 - All **activities** are tracked; more activity **increases the chance of the issue being highlighted**.  
 *Example:* Another student replies, “I spoke to the IT office—they are fixing it today,” tagging the IT head. Others upvote this contribution.
 
