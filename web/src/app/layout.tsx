@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Daabi - Student Platform",
-  description: "Student platform for raising demands, discussions, and sharing campus moments",
+  title: "Daabi - Election Campaign Platform",
+  description: "Election Campaign & Donation Management Platform",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="antialiased">
         {children}
       </body>
     </html>
