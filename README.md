@@ -13,17 +13,8 @@ The platform has the following features:
 ### 1. 📱 **Feed**
 - A Facebook-like feed where students can see posts, discussions, top demands, posts, videos, pictures and campus news. Users can also interact with the items in the feed like facebook.
  
-### 2. 📋 **Demands Tab**
-- Demands are a bigger problem, consisting of multiple issues.
-- Students can create demands or requests for the authorities.
-- Demand page will showcase these demands, sorting the top demands based on contributions and interactions in that particular demand.
-- Top demands are sorted by agreement, popularity, and category (department, club, hall, environment).  
-- Users can vote in agreement or disagreement with the demand.
-- Users can discuss the demand in multi-thread comment sections like Reddit.
-- The user can create various events (like in Facebook) under a demand to raise support for it.
-- If a demand from an authorized body is created, they can raise funds for it using the crowdfunding section.
 
-## 🔧 3. **Issues Tab**
+## 🔧 2. **Issues Tab**
 - Issues tab shows a list of issues sorted by contributions and activities under an issue.
 
 ### 1. Creating an Issue
@@ -44,7 +35,16 @@ Students can report campus-related problems, creating an **issue thread**.
   `Reported → Assigned → Discussed → Action Taken → Resolved`  
 - A **real-time log** combines **all contributions by students**, showing updates, actions, and collective effort.  
 *Example:* The log shows the WiFi issue was reported, IT assigned, discussed with residents, action taken, and resolved.
- 
+
+### 3. 📋 **Demands Tab**
+- Demands are a bigger problem, consisting of multiple issues.
+- Students can create demands or requests for the authorities.
+- Demand page will showcase these demands, sorting the top demands based on contributions and interactions in that particular demand.
+- Top demands are sorted by agreement, popularity, and category (department, club, hall, environment).  
+- Users can vote in agreement or disagreement with the demand.
+- Users can discuss the demand in multi-thread comment sections like Reddit.
+- The user can create various events (like in Facebook) under a demand to raise support for it.
+- If a demand from an authorized body is created, they can raise funds for it using the crowdfunding section.
 
 ### 4. 🔐 **Auth**
 - All users must be verified via their student email or ID card.  
