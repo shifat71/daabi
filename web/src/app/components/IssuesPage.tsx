@@ -320,7 +320,11 @@ export default function IssuesPage() {
         {/* Issues List */}
         <div className="space-y-6">
           {sortedIssues.map((issue) => (
-            <div key={issue.id} className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
+            <div 
+              key={issue.id} 
+              className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => window.location.href = `/issues/${issue.id}`}
+            >
               {/* Issue Header */}
               <div className="p-6 border-b border-gray-100">
                 <div className="flex items-start justify-between mb-4">
@@ -352,12 +356,9 @@ export default function IssuesPage() {
                 <div className="mb-4">
                   <div className="flex items-center space-x-2 mb-2">
                     <span className="text-lg">{getCategoryIcon(issue.category)}</span>
-                    <a 
-                      href={`/issues/${issue.id}`}
-                      className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer"
-                    >
+                    <h4 className="text-xl font-semibold text-gray-900">
                       {issue.title}
-                    </a>
+                    </h4>
                   </div>
                   <p className="text-gray-700 leading-relaxed">{issue.description}</p>
                 </div>
@@ -384,7 +385,10 @@ export default function IssuesPage() {
                 {/* Voting */}
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={() => handleVote(issue.id, 'upvote')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleVote(issue.id, 'upvote');
+                    }}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                       issue.userVote === 'upvote'
                         ? 'bg-green-100 text-green-700'
@@ -396,7 +400,10 @@ export default function IssuesPage() {
                   </button>
                   
                   <button
-                    onClick={() => handleVote(issue.id, 'downvote')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleVote(issue.id, 'downvote');
+                    }}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                       issue.userVote === 'downvote'
                         ? 'bg-red-100 text-red-700'
@@ -410,13 +417,6 @@ export default function IssuesPage() {
                   <span className="text-gray-500">
                     {issue.contributions.length} contribution{issue.contributions.length !== 1 ? 's' : ''}
                   </span>
-
-                  <a
-                    href={`/issues/${issue.id}`}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
-                  >
-                    View Details
-                  </a>
                 </div>
               </div>
 
