@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import MenuBar from './MenuBar';
 import UnderConstructionBanner from './UnderConstructionBanner';
+import CreateIssueModal from './CreateIssueModal';
 
 // Types for Issue
 interface Issue {
@@ -164,15 +165,7 @@ export default function IssuesPage() {
   const [issues, setIssues] = useState<Issue[]>(sampleIssues);
   const [filterStatus, setFilterStatus] = useState<'all' | 'solved' | 'unsolved' | 'under-process'>('all');
   const [sortBy, setSortBy] = useState<'recent' | 'votes' | 'priority'>('recent');
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [newIssue, setNewIssue] = useState({
-    title: '',
-    description: '',
-    category: 'other' as Issue['category'],
-    priority: 'medium' as Issue['priority'],
-    location: '',
-    tags: ''
-  });
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   // Filter issues based on status
   const filteredIssues = issues.filter(issue => {
@@ -224,39 +217,8 @@ export default function IssuesPage() {
     }));
   };
 
-  const handleCreateIssue = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const issue: Issue = {
-      id: Date.now().toString(),
-      author: {
-        name: 'Current User',
-        avatar: '/api/placeholder/40/40',
-        isVerified: true,
-        department: 'Computer Science'
-      },
-      timestamp: 'Just now',
-      title: newIssue.title,
-      description: newIssue.description,
-      category: newIssue.category,
-      status: 'reported',
-      priority: newIssue.priority,
-      votes: { upvote: 0, downvote: 0 },
-      contributions: [],
-      tags: newIssue.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
-      location: newIssue.location || undefined
-    };
-
+  const handleCreateIssue = (issue: Issue) => {
     setIssues(prev => [issue, ...prev]);
-    setNewIssue({
-      title: '',
-      description: '',
-      category: 'other',
-      priority: 'medium',
-      location: '',
-      tags: ''
-    });
-    setShowCreateForm(false);
   };
 
   const getStatusColor = (status: Issue['status']) => {
@@ -303,146 +265,57 @@ export default function IssuesPage() {
           <p className="text-gray-600">Report and track campus-related problems</p>
         </div>
 
-        {/* Controls */}
+        {/* Facebook-style Post Creation Box */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            {/* Create Issue Button */}
-            <button
-              onClick={() => setShowCreateForm(!showCreateForm)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          <div className="flex items-start space-x-3">
+            <img
+              src="/api/placeholder/40/40"
+              alt="Your avatar"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div 
+              className="flex-1 bg-gray-100 rounded-full px-4 py-3 cursor-pointer hover:bg-gray-200 transition-colors"
+              onClick={() => setShowCreateModal(true)}
             >
-              <span>➕</span>
-              <span>Report New Issue</span>
-            </button>
-
-            {/* Filters and Sort */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* Status Filter */}
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value as any)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="all">All Issues</option>
-                <option value="unsolved">Unsolved</option>
-                <option value="under-process">Under Process</option>
-                <option value="solved">Solved</option>
-              </select>
-
-              {/* Sort */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="recent">Most Recent</option>
-                <option value="votes">Most Voted</option>
-                <option value="priority">High Priority</option>
-              </select>
+              <span className="text-gray-500">What's happening on campus?</span>
             </div>
           </div>
         </div>
 
-        {/* Create Issue Form */}
-        {showCreateForm && (
-          <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">Report New Issue</h2>
-            <form onSubmit={handleCreateIssue} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Issue Title</label>
-                <input
-                  type="text"
-                  value={newIssue.title}
-                  onChange={(e) => setNewIssue(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Brief title describing the issue"
-                  required
-                />
-              </div>
+        {/* Filters and Sort Controls */}
+        <div className="bg-white rounded-xl shadow-sm border p-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Status Filter */}
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value as any)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="all">All Issues</option>
+              <option value="unsolved">Unsolved</option>
+              <option value="under-process">Under Process</option>
+              <option value="solved">Solved</option>
+            </select>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea
-                  value={newIssue.description}
-                  onChange={(e) => setNewIssue(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-24"
-                  placeholder="Detailed description of the issue"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                  <select
-                    value={newIssue.category}
-                    onChange={(e) => setNewIssue(prev => ({ ...prev, category: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="wifi">WiFi/Internet</option>
-                    <option value="food">Food/Cafeteria</option>
-                    <option value="infrastructure">Infrastructure</option>
-                    <option value="academic">Academic</option>
-                    <option value="hostel">Hostel</option>
-                    <option value="transport">Transport</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-                  <select
-                    value={newIssue.priority}
-                    onChange={(e) => setNewIssue(prev => ({ ...prev, priority: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                  <input
-                    type="text"
-                    value={newIssue.location}
-                    onChange={(e) => setNewIssue(prev => ({ ...prev, location: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Where is this issue?"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tags (comma separated)</label>
-                <input
-                  type="text"
-                  value={newIssue.tags}
-                  onChange={(e) => setNewIssue(prev => ({ ...prev, tags: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="urgent, maintenance, etc."
-                />
-              </div>
-
-              <div className="flex space-x-4 pt-4">
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                >
-                  Submit Issue
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowCreateForm(false)}
-                  className="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="recent">Most Recent</option>
+              <option value="votes">Most Voted</option>
+              <option value="priority">High Priority</option>
+            </select>
           </div>
-        )}
+        </div>
+
+        {/* Create Issue Modal */}
+        <CreateIssueModal
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onSubmit={handleCreateIssue}
+        />
 
         {/* Issues List */}
         <div className="space-y-6">
