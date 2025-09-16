@@ -36,13 +36,27 @@ export default function Home() {
             </a>
           </div>
 
+          {/* Demo Link */}
+          <div className="mb-8">
+            <a
+              href="/feed"
+              className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            >
+              <span>👀</span>
+              <span>Preview Campus Feed</span>
+              <span>→</span>
+            </a>
+          </div>
+
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
                 <span className="text-3xl">�</span>
               </div>
+              <a href="/feed">
               <h3 className="font-bold text-gray-900 mb-3 text-lg">Campus Feed</h3>
+              </a>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Stay updated with campus news, discussions, and moments shared by your fellow students
               </p>
