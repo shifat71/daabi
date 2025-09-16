@@ -35,7 +35,7 @@ export default function UnderConstructionBanner() {
               </h3>
               <p className="text-white/90 text-sm leading-relaxed">
                 Help us build <strong>Daabi</strong> - one integrated app for <strong>SUSTians</strong> led by the students. 
-                This feed feature is not implemented yet. What you're seeing is a <strong>sample UI demonstration</strong> of how the platform will work.
+                This feed feature is not implemented yet. What you&apos;re seeing is a <strong>sample UI demonstration</strong> of how the platform will work.
               </p>
             </div>
           </div>

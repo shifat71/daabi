@@ -49,18 +49,21 @@ export default function Home() {
           </div>
 
           {/* Features Grid */}
+           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <a href="/feed">
             <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
                 <span className="text-3xl">�</span>
               </div>
-              <a href="/feed">
+             
               <h3 className="font-bold text-gray-900 mb-3 text-lg">Campus Feed</h3>
-              </a>
+              
               <p className="text-sm text-gray-600 leading-relaxed">
                 Stay updated with campus news, discussions, and moments shared by your fellow students
               </p>
             </div>
+            </a>
             
             <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">

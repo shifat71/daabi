@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import MenuBar from './MenuBar';
 import UnderConstructionBanner from './UnderConstructionBanner';
 
@@ -142,7 +143,7 @@ const mockPosts: Post[] = [
     },
     timestamp: '6 hours ago',
     content: 'Just had an amazing physics lab session! Our professor demonstrated quantum interference patterns. Science is beautiful! 🔬✨',
-    images: ['https://news.uchicago.edu/story/uchicago-scientists-observe-first-evidence-quantum-superchemistry-laboratory'],
+    images: ['https://www.sust.edu/public/uploads/website/deptBanner/9_671c7728e8649.jpg'],
     reactions: { like: 78, love: 34, support: 12, angry: 0 },
     comments: [
       {
@@ -622,10 +623,22 @@ function PostCard({
 
         {/* Post Images */}
         {post.images && post.images.length > 0 && (
-          <div className="mt-4 grid grid-cols-2 gap-2">
+          <div className="mt-4 grid grid-cols-1 gap-3">
             {post.images.map((image, index) => (
-              <div key={index} className="bg-gray-200 rounded-lg aspect-video flex items-center justify-center">
-                <span className="text-gray-500">📷 Image {index + 1}</span>
+              <div key={index} className="rounded-lg overflow-hidden bg-gray-100 relative">
+                <Image 
+                  src={image} 
+                  alt={`Post image ${index + 1}`}
+                  width={800}
+                  height={400}
+                  className="w-full h-auto max-h-96 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  style={{ objectFit: 'cover' }}
+                  unoptimized={true}
+                  onError={() => {
+                    // Handle error by showing fallback
+                    console.warn('Image failed to load:', image);
+                  }}
+                />
               </div>
             ))}
           </div>
