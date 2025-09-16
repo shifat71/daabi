@@ -197,7 +197,7 @@ export default function SignUpPage() {
               {signUpMethod === 'student' && isStudentEmail && (
                 <p className="mt-1 text-sm text-green-600 flex items-center">
                   <span className="mr-1">✓</span>
-                  Valid student email - you'll be automatically verified
+                  Valid student email - you&apos;ll be automatically verified
                 </p>
               )}
             </div>
@@ -389,7 +389,7 @@ export default function SignUpPage() {
                   </h3>
                   <p className="mt-1 text-sm text-yellow-700">
                     Your account will be reviewed by our moderators after submission. 
-                    You'll receive an email notification once your account is approved.
+                    You&apos;ll receive an email notification once your account is approved.
                   </p>
                 </div>
               </div>
