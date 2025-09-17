@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import MenuBar from './MenuBar';
 import UnderConstructionBanner from './UnderConstructionBanner';
@@ -126,7 +127,7 @@ interface IssueDetailPageProps {
   issueId: string;
 }
 
-export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
+export default function IssueDetailPage({ }: IssueDetailPageProps) {
   const router = useRouter();
   const [issue, setIssue] = useState<Issue>(sampleIssue);
   const [newContribution, setNewContribution] = useState('');
@@ -143,15 +144,23 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
       let newUserVote: 'upvote' | 'downvote' | null = voteType;
 
       // Remove previous vote
-      if (currentVote === 'upvote') newVotes.upvote--;
-      if (currentVote === 'downvote') newVotes.downvote--;
+      if (currentVote === 'upvote') {
+        newVotes = { ...newVotes, upvote: newVotes.upvote - 1 };
+      }
+      if (currentVote === 'downvote') {
+        newVotes = { ...newVotes, downvote: newVotes.downvote - 1 };
+      }
 
       // Add new vote (or remove if same)
       if (currentVote === voteType) {
         newUserVote = null;
       } else {
-        if (voteType === 'upvote') newVotes.upvote++;
-        if (voteType === 'downvote') newVotes.downvote++;
+        if (voteType === 'upvote') {
+          newVotes = { ...newVotes, upvote: newVotes.upvote + 1 };
+        }
+        if (voteType === 'downvote') {
+          newVotes = { ...newVotes, downvote: newVotes.downvote + 1 };
+        }
       }
 
       return {
@@ -172,15 +181,23 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
           let newUserVote: 'upvote' | 'downvote' | null = voteType;
 
           // Remove previous vote
-          if (currentVote === 'upvote') newVotes.upvote--;
-          if (currentVote === 'downvote') newVotes.downvote--;
+          if (currentVote === 'upvote') {
+            newVotes = { ...newVotes, upvote: newVotes.upvote - 1 };
+          }
+          if (currentVote === 'downvote') {
+            newVotes = { ...newVotes, downvote: newVotes.downvote - 1 };
+          }
 
           // Add new vote (or remove if same)
           if (currentVote === voteType) {
             newUserVote = null;
           } else {
-            if (voteType === 'upvote') newVotes.upvote++;
-            if (voteType === 'downvote') newVotes.downvote++;
+            if (voteType === 'upvote') {
+              newVotes = { ...newVotes, upvote: newVotes.upvote + 1 };
+            }
+            if (voteType === 'downvote') {
+              newVotes = { ...newVotes, downvote: newVotes.downvote + 1 };
+            }
           }
 
           return {
@@ -298,10 +315,12 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-start space-x-3">
-              <img
+              <Image
                 src={issue.author.avatar}
                 alt={issue.author.name}
-                className="w-12 h-12 rounded-full object-cover"
+                width={48}
+                height={48}
+                className="rounded-full object-cover"
               />
               <div>
                 <div className="flex items-center space-x-2">
@@ -499,9 +518,11 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
                   {/* Images */}
                   {contributionImages.map((image, index) => (
                     <div key={`img-${index}`} className="relative">
-                      <img
+                      <Image
                         src={image}
                         alt={`Preview ${index + 1}`}
+                        width={80}
+                        height={80}
                         className="w-full h-20 object-cover rounded-lg"
                       />
                       <div className="absolute top-1 left-1 bg-blue-500 text-white text-xs px-1 rounded">
@@ -567,10 +588,12 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
                 )}
                 
                 <div className="flex items-start space-x-4">
-                  <img
+                  <Image
                     src={contribution.author.avatar}
                     alt={contribution.author.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover border-2 border-white shadow-md"
                   />
                   
                   <div className="flex-1 bg-gray-50 rounded-lg p-4">
@@ -592,10 +615,12 @@ export default function IssueDetailPage({ issueId }: IssueDetailPageProps) {
                     {contribution.images && contribution.images.length > 0 && (
                       <div className="grid grid-cols-2 gap-2 mb-3">
                         {contribution.images.map((image, imgIndex) => (
-                          <img
+                          <Image
                             key={imgIndex}
                             src={image}
                             alt={`Contribution image ${imgIndex + 1}`}
+                            width={200}
+                            height={128}
                             className="rounded-lg object-cover h-32 w-full"
                           />
                         ))}

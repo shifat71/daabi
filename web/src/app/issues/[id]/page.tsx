@@ -1,5 +1,6 @@
 import IssueDetailPage from '../../components/IssueDetailPage';
 
-export default function IssueDetail({ params }: { params: { id: string } }) {
-  return <IssueDetailPage issueId={params.id} />;
+export default async function IssueDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <IssueDetailPage issueId={id} />;
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import MenuBar from './MenuBar';
 import UnderConstructionBanner from './UnderConstructionBanner';
 import CreateIssueModal from './CreateIssueModal';
@@ -211,15 +212,23 @@ export default function IssuesPage() {
         let newUserVote: 'upvote' | 'downvote' | null = voteType;
 
         // Remove previous vote
-        if (currentVote === 'upvote') newVotes.upvote--;
-        if (currentVote === 'downvote') newVotes.downvote--;
+        if (currentVote === 'upvote') {
+          newVotes = { ...newVotes, upvote: newVotes.upvote - 1 };
+        }
+        if (currentVote === 'downvote') {
+          newVotes = { ...newVotes, downvote: newVotes.downvote - 1 };
+        }
 
         // Add new vote (or remove if same)
         if (currentVote === voteType) {
           newUserVote = null;
         } else {
-          if (voteType === 'upvote') newVotes.upvote++;
-          if (voteType === 'downvote') newVotes.downvote++;
+          if (voteType === 'upvote') {
+            newVotes = { ...newVotes, upvote: newVotes.upvote + 1 };
+          }
+          if (voteType === 'downvote') {
+            newVotes = { ...newVotes, downvote: newVotes.downvote + 1 };
+          }
         }
 
         return {
@@ -283,16 +292,18 @@ export default function IssuesPage() {
         {/* Facebook-style Post Creation Box */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
           <div className="flex items-start space-x-3">
-            <img
+            <Image
               src={getAvatarUrl(undefined, "You")}
               alt="Your avatar"
-              className="w-10 h-10 rounded-full object-cover"
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
             />
             <div 
               className="flex-1 bg-gray-100 rounded-full px-4 py-3 cursor-pointer hover:bg-gray-200 transition-colors"
               onClick={() => setShowCreateModal(true)}
             >
-              <span className="text-gray-500">What's happening on campus?</span>
+              <span className="text-gray-500">What&apos;s happening on campus?</span>
             </div>
           </div>
         </div>
@@ -303,7 +314,7 @@ export default function IssuesPage() {
             {/* Status Filter */}
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
+              onChange={(e) => setFilterStatus(e.target.value as 'all' | 'solved' | 'unsolved' | 'under-process')}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">All Issues</option>
@@ -315,7 +326,7 @@ export default function IssuesPage() {
             {/* Sort */}
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) => setSortBy(e.target.value as 'recent' | 'votes' | 'priority')}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="recent">Most Recent</option>
@@ -344,10 +355,12 @@ export default function IssuesPage() {
               <div className="p-6 border-b border-gray-100">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-3">
-                    <img
+                    <Image
                       src={getAvatarUrl(issue.author.avatar, issue.author.name)}
                       alt={issue.author.name}
-                      className="w-10 h-10 rounded-full object-cover"
+                      width={40}
+                      height={40}
+                      className="rounded-full object-cover"
                     />
                     <div>
                       <div className="flex items-center space-x-2">
@@ -443,10 +456,12 @@ export default function IssuesPage() {
                     {issue.contributions.slice(0, 2).map((contribution) => (
                       <div key={contribution.id} className="bg-gray-50 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <img
+                          <Image
                             src={getAvatarUrl(contribution.author.avatar, contribution.author.name)}
                             alt={contribution.author.name}
-                            className="w-8 h-8 rounded-full object-cover"
+                            width={32}
+                            height={32}
+                            className="rounded-full object-cover"
                           />
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-1">

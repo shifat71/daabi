@@ -1,6 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
+
+interface Contribution {
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+    isVerified: boolean;
+  };
+  timestamp: string;
+  content: string;
+  type: 'update' | 'comment' | 'action';
+  votes: {
+    upvote: number;
+    downvote: number;
+  };
+  userVote?: 'upvote' | 'downvote' | null;
+  taggedPersons?: string[];
+}
 
 interface Issue {
   id: string;
@@ -22,7 +41,7 @@ interface Issue {
     downvote: number;
   };
   userVote?: 'upvote' | 'downvote' | null;
-  contributions: any[];
+  contributions: Contribution[];
   tags: string[];
   location?: string;
 }
@@ -191,7 +210,7 @@ export default function CreateIssueModal({ isOpen, onClose, onSubmit }: CreateIs
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
             <select
               value={newIssue.category}
-              onChange={(e) => setNewIssue(prev => ({ ...prev, category: e.target.value as any }))}
+              onChange={(e) => setNewIssue(prev => ({ ...prev, category: e.target.value as Issue['category'] }))}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="wifi">📶 WiFi/Internet</option>
@@ -259,10 +278,12 @@ export default function CreateIssueModal({ isOpen, onClose, onSubmit }: CreateIs
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
                         {file.type.startsWith('image/') ? (
-                          <img
+                          <Image
                             src={URL.createObjectURL(file)}
                             alt={file.name}
-                            className="w-12 h-12 rounded object-cover"
+                            width={48}
+                            height={48}
+                            className="rounded object-cover"
                           />
                         ) : (
                           <div className="w-12 h-12 bg-blue-100 rounded flex items-center justify-center">
