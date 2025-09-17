@@ -5,6 +5,21 @@ import MenuBar from './MenuBar';
 import UnderConstructionBanner from './UnderConstructionBanner';
 import CreateIssueModal from './CreateIssueModal';
 
+// Helper function to get avatar with fallback
+const getAvatarUrl = (avatar?: string, name?: string) => {
+  if (avatar && avatar !== '/api/placeholder/40/40') {
+    return avatar;
+  }
+  // Generate a default avatar based on initials
+  const initials = name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : '?';
+  return `data:image/svg+xml;base64,${btoa(`
+    <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="20" fill="#e5e7eb"/>
+      <text x="20" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#6b7280">${initials}</text>
+    </svg>
+  `)}`;
+};
+
 // Types for Issue
 interface Issue {
   id: string;
@@ -269,7 +284,7 @@ export default function IssuesPage() {
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
           <div className="flex items-start space-x-3">
             <img
-              src="/api/placeholder/40/40"
+              src={getAvatarUrl(undefined, "You")}
               alt="Your avatar"
               className="w-10 h-10 rounded-full object-cover"
             />
@@ -330,7 +345,7 @@ export default function IssuesPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-3">
                     <img
-                      src={issue.author.avatar}
+                      src={getAvatarUrl(issue.author.avatar, issue.author.name)}
                       alt={issue.author.name}
                       className="w-10 h-10 rounded-full object-cover"
                     />
@@ -429,7 +444,7 @@ export default function IssuesPage() {
                       <div key={contribution.id} className="bg-gray-50 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
                           <img
-                            src={contribution.author.avatar}
+                            src={getAvatarUrl(contribution.author.avatar, contribution.author.name)}
                             alt={contribution.author.name}
                             className="w-8 h-8 rounded-full object-cover"
                           />
