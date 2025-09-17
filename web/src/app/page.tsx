@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -21,40 +23,40 @@ export default function Home() {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 max-w-md mx-auto">
-            <a
+            <Link
               href="/login"
               className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg"
             >
               Sign In
-            </a>
+            </Link>
             
-            <a
+            <Link
               href="/signup"
               className="flex-1 bg-white text-gray-700 py-4 px-8 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg"
             >
               Join Campus
-            </a>
+            </Link>
           </div>
 
           {/* Demo Link */}
           <div className="mb-8">
-            <a
+            <Link
               href="/feed"
               className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
             >
               <span>👀</span>
               <span>Preview Campus Feed</span>
               <span>→</span>
-            </a>
+            </Link>
           </div>
 
           {/* Features Grid */}
            
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <a href="/feed">
+            <Link href="/feed">
             <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <span className="text-3xl">�</span>
+                <span className="text-3xl">📰</span>
               </div>
              
               <h3 className="font-bold text-gray-900 mb-3 text-lg">Campus Feed</h3>
@@ -63,7 +65,7 @@ export default function Home() {
                 Stay updated with campus news, discussions, and moments shared by your fellow students
               </p>
             </div>
-            </a>
+            </Link>
             
             <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
@@ -165,18 +167,18 @@ export default function Home() {
               solve campus issues, and build a stronger community together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <a
+              <Link
                 href="/signup"
                 className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg"
               >
                 Get Started
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/login"
                 className="flex-1 bg-white text-blue-600 py-3 px-6 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg"
               >
                 Sign In
-              </a>
+              </Link>
             </div>
           </div>
         </div>

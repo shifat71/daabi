@@ -804,10 +804,10 @@ function PostCard({
       </div>
 
       {/* Reactions and Comments Bar */}
-      <div className="px-6 py-3 border-t border-gray-100">
+      <div className="px-3 py-2 md:px-6 md:py-3 border-t border-gray-100">
         {/* Reaction Summary */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-4 text-sm text-gray-600">
+        <div className="flex items-center justify-between mb-2 md:mb-3">
+          <div className="flex items-center space-x-2 md:space-x-4 text-xs md:text-sm text-gray-600">
             <span>{Object.values(post.reactions).reduce((a, b) => a + b, 0)} reactions</span>
             <span>{post.comments.length} comments</span>
           </div>
@@ -815,7 +815,7 @@ function PostCard({
 
         {/* Reaction Buttons */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-1 md:space-x-4">
             {/* Like/React Button with Hover */}
             <div 
               className="relative"
@@ -833,20 +833,20 @@ function PostCard({
                     onReaction(post.id, 'like'); // Default to like
                   }
                 }}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105 group relative z-10 ${
+                className={`flex items-center space-x-1 md:space-x-2 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 hover:scale-105 group relative z-10 ${
                   post.userReaction
                     ? 'text-blue-600 bg-blue-50 shadow-sm'
                     : 'hover:bg-gray-100 text-gray-600'
                 }`}
               >
-                <span className="text-lg transition-transform duration-200 group-hover:scale-110">
+                <span className="text-sm md:text-lg transition-transform duration-200 group-hover:scale-110">
                   {post.userReaction === 'like' && '👍'}
                   {post.userReaction === 'love' && '❤️'}
                   {post.userReaction === 'support' && '🙌'}
                   {post.userReaction === 'angry' && '😠'}
                   {!post.userReaction && '👍'}
                 </span>
-                <span className="text-sm font-medium">
+                <span className="text-xs md:text-sm font-medium">
                   {post.userReaction
                     ? post.userReaction.charAt(0).toUpperCase() + post.userReaction.slice(1)
                     : 'Like'
@@ -886,19 +886,19 @@ function PostCard({
 
             <button
               onClick={() => setShowComments(!showComments)}
-              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 group"
+              className="flex items-center space-x-1 md:space-x-2 px-2 py-1 md:px-4 md:py-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 group"
             >
-              <svg className="w-5 h-5 group-hover:text-gray-800 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:text-gray-800 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
-              <span className="text-sm font-medium">Comment</span>
+              <span className="text-xs md:text-sm font-medium">Comment</span>
             </button>
 
-            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 group">
-              <svg className="w-5 h-5 group-hover:text-gray-800 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button className="flex items-center space-x-1 md:space-x-2 px-2 py-1 md:px-4 md:py-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 group">
+              <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:text-gray-800 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
               </svg>
-              <span className="text-sm font-medium">Share</span>
+              <span className="text-xs md:text-sm font-medium">Share</span>
             </button>
           </div>
         </div>
@@ -911,20 +911,20 @@ function PostCard({
           {post.comments.map((comment, index) => (
             <div 
               key={comment.id} 
-              className="px-6 py-4 border-b border-gray-50/80 last:border-b-0 hover:bg-gray-50/30 transition-all duration-200"
+              className="px-3 py-3 md:px-6 md:py-4 border-b border-gray-50/80 last:border-b-0 hover:bg-gray-50/30 transition-all duration-200"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start space-x-3 group">
-                <div className="text-lg transition-transform duration-200 group-hover:scale-110">{comment.author.avatar}</div>
+              <div className="flex items-start space-x-2 md:space-x-3 group">
+                <div className="text-sm md:text-lg transition-transform duration-200 group-hover:scale-110">{comment.author.avatar}</div>
                 <div className="flex-1">
-                  <div className="bg-gray-50/80 rounded-xl p-3 hover:bg-gray-100/80 transition-all duration-200">
+                  <div className="bg-gray-50/80 rounded-xl p-2 md:p-3 hover:bg-gray-100/80 transition-all duration-200">
                     <div className="flex items-center space-x-2 mb-1">
-                      <span className="font-medium text-sm text-gray-900 group-hover:text-blue-600 transition-colors duration-200">{comment.author.name}</span>
+                      <span className="font-medium text-xs md:text-sm text-gray-900 group-hover:text-blue-600 transition-colors duration-200">{comment.author.name}</span>
                       <span className="text-xs text-gray-500">{comment.timestamp}</span>
                     </div>
-                    <p className="text-sm text-gray-800 leading-relaxed">{comment.content}</p>
+                    <p className="text-xs md:text-sm text-gray-800 leading-relaxed">{comment.content}</p>
                   </div>
-                  <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                  <div className="flex items-center space-x-3 md:space-x-4 mt-2 text-xs text-gray-500">
                     <button className="hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1 group">
                       <svg className="w-3 h-3 group-hover:scale-110 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L9 8.5v9.5m0 0V14m0 5.5l2.5-2.5M12 14l2.5 2.5" />
@@ -944,24 +944,24 @@ function PostCard({
           ))}
 
           {/* New Comment Form */}
-          <form onSubmit={handleSubmitComment} className="px-6 py-4 bg-gray-50/30">
-            <div className="flex items-start space-x-3">
-              <div className="text-lg transition-transform duration-200 hover:scale-110">👤</div>
+          <form onSubmit={handleSubmitComment} className="px-3 py-3 md:px-6 md:py-4 bg-gray-50/30">
+            <div className="flex items-start space-x-2 md:space-x-3">
+              <div className="text-sm md:text-lg transition-transform duration-200 hover:scale-110">👤</div>
               <div className="flex-1">
                 <textarea
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Write a comment..."
-                  className="w-full p-3 border border-gray-300/50 rounded-xl resize-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none bg-white/80 backdrop-blur-sm transition-all duration-200 hover:border-gray-400/50"
+                  className="w-full p-2 md:p-3 border border-gray-300/50 rounded-xl resize-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none bg-white/80 backdrop-blur-sm transition-all duration-200 hover:border-gray-400/50 text-sm md:text-base"
                   rows={2}
                 />
-                <div className="flex justify-end mt-3">
+                <div className="flex justify-end mt-2 md:mt-3">
                   <button
                     type="submit"
                     disabled={!newComment.trim()}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center space-x-2 group shadow-md hover:shadow-lg disabled:shadow-none"
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center space-x-1 md:space-x-2 group shadow-md hover:shadow-lg disabled:shadow-none text-xs md:text-sm"
                   >
-                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
                     <span>Comment</span>

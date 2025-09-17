@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function SignUpPage() {
   const [signUpMethod, setSignUpMethod] = useState<'student' | 'manual'>('student');
@@ -400,9 +401,9 @@ export default function SignUpPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <a href="/login" className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
+              <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
                 Sign in here
-              </a>
+              </Link>
             </p>
           </div>
         </div>

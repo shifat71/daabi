@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 interface MenuBarProps {
   isHidden?: boolean;
 }
@@ -24,7 +26,7 @@ export default function MenuBar({ isHidden = false }: MenuBarProps) {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <a 
+            <Link 
               href="/feed" 
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium flex items-center space-x-2 group"
             >
@@ -32,9 +34,9 @@ export default function MenuBar({ isHidden = false }: MenuBarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
               </svg>
               <span>Feed</span>
-            </a>
+            </Link>
             
-            <a 
+            <Link 
               href="/demands" 
               className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center space-x-2 group"
             >
@@ -42,9 +44,9 @@ export default function MenuBar({ isHidden = false }: MenuBarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
               <span>Demands</span>
-            </a>
+            </Link>
             
-            <a 
+            <Link 
               href="/issues" 
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium flex items-center space-x-2 group"
             >
@@ -52,9 +54,9 @@ export default function MenuBar({ isHidden = false }: MenuBarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>Issues</span>
-            </a>
+            </Link>
             
-            <a 
+            <Link 
               href="/marketplace" 
               className="text-gray-700 hover:text-green-600 transition-colors duration-200 font-medium flex items-center space-x-2 group"
             >
@@ -62,7 +64,7 @@ export default function MenuBar({ isHidden = false }: MenuBarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               <span>Marketplace</span>
-            </a>
+            </Link>
           </div>
 
           {/* Right side actions */}
