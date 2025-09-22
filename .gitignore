@@ -24,6 +24,57 @@ logs/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
+!.env.template
+
+# Database connection strings and secrets
+DATABASE_URL
+DB_*
+POSTGRES_*
+MYSQL_*
+MONGODB_*
+
+# API Keys and secrets
+API_KEY*
+SECRET_KEY*
+PRIVATE_KEY*
+*_SECRET
+*_KEY
+*_TOKEN
+JWT_SECRET
+NEXTAUTH_SECRET
+NEXTAUTH_URL
+
+# OAuth and authentication secrets
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET
+FACEBOOK_APP_ID
+FACEBOOK_APP_SECRET
+
+# Cloud service credentials
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AZURE_*
+GCP_*
+CLOUDINARY_*
+
+# Payment gateway secrets
+STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY
+PAYPAL_*
+
+# Email service credentials
+SMTP_*
+SENDGRID_*
+MAILGUN_*
+
+# Other service credentials
+REDIS_URL
+ELASTICSEARCH_URL
+FIREBASE_*
 
 # Temporary files
 tmp/
