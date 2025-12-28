@@ -1,0 +1,22 @@
+// Export all API functions and types
+export * from './client'
+export * from './auth'
+export * from './posts'
+export * from './issues'
+export * from './demands'
+export * from './marketplace'
+export * from './comments'
+export * from './notifications'
+export * from './users'
+export * from './upload'
+
+// Re-export APIs as named objects for convenience
+export { authApi } from './auth'
+export { postsApi } from './posts'
+export { issuesApi } from './issues'
+export { demandsApi } from './demands'
+export { marketplaceApi } from './marketplace'
+export { commentsApi, reactionsApi } from './comments'
+export { notificationsApi } from './notifications'
+export { usersApi } from './users'
+export { uploadApi } from './upload'

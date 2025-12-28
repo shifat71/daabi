@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Daabi - Student Campus Platform
+// Prisma Schema for PostgreSQL
 
 generator client {
   provider = "prisma-client-js"
@@ -13,12 +10,605 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String    @id @default(cuid())
+  email             String    @unique
+  passwordHash      String?
+  name              String?
+  displayName       String?
+  avatar            String?
+  bio               String?
+  studentId         String?   @unique
+  department        String?
+  batch             String?
+  hall              String?
+  phone             String?
+  isVerified        Boolean   @default(false)
+  isAdmin           Boolean   @default(false)
+  isModerator       Boolean   @default(false)
+  emailVerifiedAt   DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  lastLoginAt       DateTime?
+
+  // Relations
+  sessions          Session[]
+  posts             Post[]
+  comments          Comment[]
+  reactions         Reaction[]
+  issues            Issue[]
+  issueContributions IssueContribution[]
+  demands           Demand[]
+  demandVotes       DemandVote[]
+  marketplace       MarketplaceItem[]
+  crowdfundings     Crowdfunding[]
+  donations         Donation[]
+  notifications     Notification[]
+  reportsMade       Report[]         @relation("ReportsMade")
+  reportsReceived   Report[]         @relation("ReportsReceived")
+  verificationTokens VerificationToken[]
 
   @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  token        String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id        String            @id @default(cuid())
+  userId    String
+  token     String            @unique
+  type      VerificationTokenType
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime          @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId, type])
+  @@map("verification_tokens")
+}
+
+enum VerificationTokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+// ============================================
+// FEED & POSTS
+// ============================================
+
+model Post {
+  id          String     @id @default(cuid())
+  authorId    String
+  content     String
+  type        PostType   @default(TEXT)
+  visibility  Visibility @default(PUBLIC)
+  isPinned    Boolean    @default(false)
+  isAnonymous Boolean    @default(false)
+  viewCount   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  author      User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  media       Media[]
+  comments    Comment[]
+  reactions   Reaction[]
+  tags        PostTag[]
+
+  @@index([authorId])
+  @@index([createdAt])
+  @@map("posts")
+}
+
+model Media {
+  id        String    @id @default(cuid())
+  postId    String?
+  issueId   String?
+  demandId  String?
+  itemId    String?
+  url       String
+  type      MediaType
+  caption   String?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+
+  post            Post?            @relation(fields: [postId], references: [id], onDelete: Cascade)
+  issue           Issue?           @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  demand          Demand?          @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  marketplaceItem MarketplaceItem? @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@map("media")
+}
+
+model Comment {
+  id          String   @id @default(cuid())
+  authorId    String
+  postId      String?
+  issueId     String?
+  demandId    String?
+  parentId    String?
+  content     String
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post      Post?      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  issue     Issue?     @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  demand    Demand?    @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  parent    Comment?   @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[]  @relation("CommentReplies")
+  reactions Reaction[]
+
+  @@index([postId])
+  @@index([issueId])
+  @@index([demandId])
+  @@map("comments")
+}
+
+model Reaction {
+  id        String       @id @default(cuid())
+  userId    String
+  postId    String?
+  commentId String?
+  type      ReactionType
+  createdAt DateTime     @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post    Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+  @@map("reactions")
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+
+  posts   PostTag[]
+  issues  IssueTag[]
+  demands DemandTag[]
+
+  @@map("tags")
+}
+
+model PostTag {
+  postId String
+  tagId  String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+// ============================================
+// ISSUES
+// ============================================
+
+model Issue {
+  id          String      @id @default(cuid())
+  authorId    String
+  title       String
+  description String
+  status      IssueStatus @default(REPORTED)
+  priority    Priority    @default(MEDIUM)
+  category    String?
+  location    String?
+  isAnonymous Boolean     @default(false)
+  viewCount   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  resolvedAt  DateTime?
+
+  // Relations
+  author        User                @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  media         Media[]
+  comments      Comment[]
+  contributions IssueContribution[]
+  tags          IssueTag[]
+  demandIssues  DemandIssue[]
+
+  @@index([authorId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("issues")
+}
+
+model IssueContribution {
+  id        String           @id @default(cuid())
+  issueId   String
+  userId    String
+  type      ContributionType
+  content   String
+  upvotes   Int              @default(0)
+  downvotes Int              @default(0)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  issue Issue @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@map("issue_contributions")
+}
+
+model IssueTag {
+  issueId String
+  tagId   String
+
+  issue Issue @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([issueId, tagId])
+  @@map("issue_tags")
+}
+
+// ============================================
+// DEMANDS
+// ============================================
+
+model Demand {
+  id           String       @id @default(cuid())
+  authorId     String
+  title        String
+  description  String
+  category     DemandCategory
+  status       DemandStatus @default(PENDING)
+  priority     Priority     @default(MEDIUM)
+  targetEntity String?      // Department, Hall, Club, Administration
+  agreeCount   Int          @default(0)
+  disagreeCount Int         @default(0)
+  viewCount    Int          @default(0)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  resolvedAt   DateTime?
+
+  // Relations
+  author       User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  media        Media[]
+  comments     Comment[]
+  votes        DemandVote[]
+  tags         DemandTag[]
+  issues       DemandIssue[]
+  events       DemandEvent[]
+  crowdfunding Crowdfunding?
+
+  @@index([authorId])
+  @@index([status])
+  @@index([category])
+  @@map("demands")
+}
+
+model DemandVote {
+  id        String   @id @default(cuid())
+  demandId  String
+  userId    String
+  voteType  VoteType
+  createdAt DateTime @default(now())
+
+  demand Demand @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([demandId, userId])
+  @@map("demand_votes")
+}
+
+model DemandTag {
+  demandId String
+  tagId    String
+
+  demand Demand @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([demandId, tagId])
+  @@map("demand_tags")
+}
+
+model DemandIssue {
+  demandId String
+  issueId  String
+
+  demand Demand @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  issue  Issue  @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@id([demandId, issueId])
+  @@map("demand_issues")
+}
+
+model DemandEvent {
+  id          String    @id @default(cuid())
+  demandId    String
+  title       String
+  description String?
+  location    String?
+  startTime   DateTime
+  endTime     DateTime?
+  createdAt   DateTime  @default(now())
+
+  demand Demand @relation(fields: [demandId], references: [id], onDelete: Cascade)
+
+  @@map("demand_events")
+}
+
+// ============================================
+// MARKETPLACE (Kroy-Bikroy)
+// ============================================
+
+model MarketplaceItem {
+  id          String          @id @default(cuid())
+  sellerId    String
+  title       String
+  description String
+  price       Decimal         @db.Decimal(10, 2)
+  currency    String          @default("BDT")
+  category    ItemCategory
+  condition   ItemCondition
+  status      ItemStatus      @default(AVAILABLE)
+  location    String?
+  viewCount   Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  soldAt      DateTime?
+
+  seller User    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  media  Media[]
+
+  @@index([sellerId])
+  @@index([category])
+  @@index([status])
+  @@map("marketplace_items")
+}
+
+// ============================================
+// CROWDFUNDING
+// ============================================
+
+model Crowdfunding {
+  id           String            @id @default(cuid())
+  organizerId  String
+  demandId     String?           @unique
+  title        String
+  description  String
+  goalAmount   Decimal           @db.Decimal(12, 2)
+  raisedAmount Decimal           @default(0) @db.Decimal(12, 2)
+  currency     String            @default("BDT")
+  status       CrowdfundingStatus @default(ACTIVE)
+  startDate    DateTime          @default(now())
+  endDate      DateTime
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  organizer User       @relation(fields: [organizerId], references: [id], onDelete: Cascade)
+  demand    Demand?    @relation(fields: [demandId], references: [id], onDelete: SetNull)
+  donations Donation[]
+
+  @@index([organizerId])
+  @@index([status])
+  @@map("crowdfundings")
+}
+
+model Donation {
+  id             String   @id @default(cuid())
+  crowdfundingId String
+  donorId        String?
+  amount         Decimal  @db.Decimal(10, 2)
+  currency       String   @default("BDT")
+  paymentMethod  String?
+  transactionId  String?
+  isAnonymous    Boolean  @default(false)
+  message        String?
+  createdAt      DateTime @default(now())
+
+  crowdfunding Crowdfunding @relation(fields: [crowdfundingId], references: [id], onDelete: Cascade)
+  donor        User?        @relation(fields: [donorId], references: [id], onDelete: SetNull)
+
+  @@index([crowdfundingId])
+  @@map("donations")
+}
+
+// ============================================
+// NOTIFICATIONS & MODERATION
+// ============================================
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  reporterId  String
+  reportedId  String?
+  targetType  ReportTarget
+  targetId    String
+  reason      String
+  description String?
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  resolvedAt  DateTime?
+
+  reporter User  @relation("ReportsMade", fields: [reporterId], references: [id], onDelete: Cascade)
+  reported User? @relation("ReportsReceived", fields: [reportedId], references: [id], onDelete: SetNull)
+
+  @@map("reports")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum PostType {
+  TEXT
+  IMAGE
+  VIDEO
+  LINK
+  POLL
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+}
+
+enum Visibility {
+  PUBLIC
+  CAMPUS_ONLY
+  DEPARTMENT_ONLY
+  PRIVATE
+}
+
+enum ReactionType {
+  LIKE
+  LOVE
+  HAHA
+  WOW
+  SAD
+  ANGRY
+}
+
+enum IssueStatus {
+  REPORTED
+  ASSIGNED
+  IN_PROGRESS
+  DISCUSSED
+  ACTION_TAKEN
+  RESOLVED
+  CLOSED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ContributionType {
+  UPDATE
+  COMMENT
+  EVIDENCE
+  SOLUTION
+  ESCALATION
+}
+
+enum DemandCategory {
+  DEPARTMENT
+  HALL
+  CLUB
+  ENVIRONMENT
+  INFRASTRUCTURE
+  ACADEMIC
+  ADMINISTRATIVE
+  OTHER
+}
+
+enum DemandStatus {
+  PENDING
+  UNDER_REVIEW
+  ACCEPTED
+  IN_PROGRESS
+  REJECTED
+  RESOLVED
+}
+
+enum VoteType {
+  AGREE
+  DISAGREE
+}
+
+enum ItemCategory {
+  ELECTRONICS
+  BOOKS
+  CLOTHING
+  FURNITURE
+  ACCESSORIES
+  SPORTS
+  STATIONERY
+  OTHER
+}
+
+enum ItemCondition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  POOR
+}
+
+enum ItemStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  REMOVED
+}
+
+enum CrowdfundingStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum NotificationType {
+  COMMENT
+  REACTION
+  MENTION
+  FOLLOW
+  ISSUE_UPDATE
+  DEMAND_UPDATE
+  DONATION
+  SYSTEM
+}
+
+enum ReportTarget {
+  USER
+  POST
+  COMMENT
+  ISSUE
+  DEMAND
+  MARKETPLACE_ITEM
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWING
+  RESOLVED
+  DISMISSED
 }
